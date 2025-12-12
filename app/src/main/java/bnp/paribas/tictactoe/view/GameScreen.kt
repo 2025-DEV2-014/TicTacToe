@@ -56,8 +56,9 @@ fun GameScreen(
                             else -> " "
                         }
                         Button(
-                            modifier = Modifier.size(60.dp).padding(2.dp).testTag("$col - $row"),
-                            onClick = { viewModel.onBoardClick(row, col) }
+                            modifier = Modifier.size(100.dp).padding(2.dp).testTag("$col - $row"),
+                            onClick = { viewModel.onBoardClick(row, col) },
+                            shape = RoundedCornerShape(4.dp)
                         ) {
                             Text(
                                 text = buttonText,
@@ -69,7 +70,7 @@ fun GameScreen(
             }
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
         val statusText: String = when {
             gameState.winner != Player.EMPTY -> "Player ${gameState.winner} wins!"
@@ -78,12 +79,12 @@ fun GameScreen(
         }
 
         Text(text = statusText,
-            modifier = Modifier.padding(12.dp),
+            modifier = Modifier.padding(16.dp),
             fontSize = 20.sp,
             textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
         Button(onClick = {
             viewModel.restart()
