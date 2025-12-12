@@ -1,10 +1,13 @@
 package bnp.paribas.tictactoe.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import bnp.paribas.tictactoe.model.GameState
 import bnp.paribas.tictactoe.model.Player
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class TicTacToeViewModel(): ViewModel() {
 
@@ -28,6 +31,49 @@ class TicTacToeViewModel(): ViewModel() {
     }
 
     fun onBoardClick(row: Int, col: Int) {
-        //TODO: handle logic board click
+        // Click has no effect if position is already taken
+        if (board[row][col] != Player.EMPTY) {
+            return
+        }
+
+        viewModelScope.launch {
+            val newBoard = board.copyOf()
+            newBoard[row][col] = currentPlayer
+
+            val winner = checkWin(row, col, newBoard, currentPlayer)
+            val newMoveCount = moves + 1
+            val newCurrentPlayer = if (newMoveCount % 2 == 0) Player.X else Player.O
+
+            _gameState.update {
+                it.copy(
+                    board = newBoard,
+                    moves = newMoveCount,
+                    currentPlayer = newCurrentPlayer,
+                    winner = winner
+                )
+            }
+        }
+    }
+
+    private fun checkWin(row: Int, col: Int, board: Array<Array<Player>>, currentPlayer: Player): Player {
+
+        // Check all row entries
+        if (board[row].all { it == currentPlayer }) {
+            return currentPlayer
+        }
+
+        // Check column
+        if (board.all { it[col] == currentPlayer }) {
+            return currentPlayer
+        }
+
+        // check diagonals
+        if (board[0][0] == board[1][1] && board[1][1] == board[2][2] ||
+            board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
+            return currentPlayer
+        }
+
+        // No winner (yet?)
+        return Player.EMPTY
     }
 }
