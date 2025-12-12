@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class TicTacToeViewModel(): ViewModel() {
+class TicTacToeViewModel(private val gameEngine: GameEngine = GameEngine()): ViewModel() {
 
     private val _gameState = MutableStateFlow(GameState())
     val gameState = _gameState.asStateFlow()
@@ -42,7 +42,7 @@ class TicTacToeViewModel(): ViewModel() {
 
             val winner = checkWin(row, col, newBoard, currentPlayer)
             val newMoveCount = moves + 1
-            val newCurrentPlayer = if (newMoveCount % 2 == 0) Player.X else Player.O
+            val newCurrentPlayer = gameEngine.getPlayerForMove(newMoveCount)
 
             _gameState.update {
                 it.copy(

@@ -10,7 +10,7 @@ class GameEngine {
     }
 
     internal fun getPlayerForMove(move: Int): Player {
-        //TODO
-        return Player.EMPTY
+        return if (move % 2 == 0) Player.X
+        else Player.O
     }
 }
