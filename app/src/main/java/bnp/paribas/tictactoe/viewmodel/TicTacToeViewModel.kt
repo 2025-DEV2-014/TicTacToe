@@ -24,7 +24,7 @@ class TicTacToeViewModel(): ViewModel() {
         get() = gameState.value.moves
 
     fun restart() {
-        //TODO: restart game
+        _gameState.value = GameState()
     }
 
     fun onBoardClick(row: Int, col: Int) {
