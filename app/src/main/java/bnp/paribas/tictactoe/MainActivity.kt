@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import bnp.paribas.tictactoe.ui.theme.TicTacToeTheme
+import bnp.paribas.tictactoe.view.GameScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,9 +21,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             TicTacToeTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+                    GameScreen(
+                        modifier = Modifier.padding(innerPadding),
                     )
                 }
             }
