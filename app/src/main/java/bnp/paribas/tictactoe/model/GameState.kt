@@ -5,4 +5,7 @@ data class GameState (
     val moves: Int = 0,
     val currentPlayer: Player = Player.X,
     val winner: Player = Player.EMPTY,
-)
+) {
+    val statusText: String
+        get() = "current status"
+}
