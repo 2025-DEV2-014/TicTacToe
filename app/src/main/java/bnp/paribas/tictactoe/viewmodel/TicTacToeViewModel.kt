@@ -68,8 +68,9 @@ class TicTacToeViewModel(): ViewModel() {
         }
 
         // check diagonals
-        if (board[0][0] == board[1][1] && board[1][1] == board[2][2] ||
-            board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
+        if (board[1][1] != Player.EMPTY && (
+                    board[0][0] == board[1][1] && board[1][1] == board[2][2] ||
+                            board[0][2] == board[1][1] && board[1][1] == board[2][0])) {
             return currentPlayer
         }
 
