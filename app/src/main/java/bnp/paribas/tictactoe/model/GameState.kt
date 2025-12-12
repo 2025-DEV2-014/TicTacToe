@@ -7,5 +7,9 @@ data class GameState (
     val winner: Player = Player.EMPTY,
 ) {
     val statusText: String
-        get() = "current status"
+        get() = when {
+            winner != Player.EMPTY -> "Player ${winner} wins!"
+            moves >= 9 -> "It's a draw!"
+            else -> "Player ${currentPlayer}'s turn"
+        }
 }
