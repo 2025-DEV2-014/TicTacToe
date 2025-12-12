@@ -31,8 +31,8 @@ class TicTacToeViewModel(): ViewModel() {
     }
 
     fun onBoardClick(row: Int, col: Int) {
-        // Click has no effect if position is already taken
-        if (board[row][col] != Player.EMPTY) {
+        // Click has no effect if position is already taken OR the game is already over
+        if (board[row][col] != Player.EMPTY || winner != Player.EMPTY) {
             return
         }
 
