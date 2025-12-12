@@ -2,6 +2,12 @@ package bnp.paribas.tictactoe
 
 import bnp.paribas.tictactoe.viewmodel.TicTacToeViewModel
 import bnp.paribas.tictactoe.model.Player
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -12,9 +18,17 @@ class TicTacToeViewModelTest{
 
     private lateinit var viewModel: TicTacToeViewModel
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     @Before
     fun setUp() {
         viewModel = TicTacToeViewModel()
+        Dispatchers.setMain(UnconfinedTestDispatcher())
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @After
+    fun after() {
+        Dispatchers.resetMain()
     }
 
     @Test
