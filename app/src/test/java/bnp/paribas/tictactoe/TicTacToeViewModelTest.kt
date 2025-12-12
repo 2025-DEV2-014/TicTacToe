@@ -172,4 +172,32 @@ class TicTacToeViewModelTest{
 
         assertEquals(Player.O, viewModel.winner)
     }
+
+    @Test
+    fun `When a player tries to play after the game is over, this has no effect`() {
+        /**
+         * X O .
+         * X O .
+         * X . .
+         */
+        viewModel.onBoardClick(0, 0)
+        viewModel.onBoardClick(0, 1)
+        viewModel.onBoardClick(1, 0)
+        viewModel.onBoardClick(1, 1)
+        viewModel.onBoardClick(2, 0)
+
+        // there should be "a" winner
+        assertNotEquals(Player.EMPTY, viewModel.winner)
+
+        viewModel.onBoardClick(2, 2)
+
+        assertEquals(viewModel.board[2][2], Player.EMPTY)
+    }
+
+    @Test
+    fun `When only one move has been made, there can't be a winner yet`() {
+        viewModel.onBoardClick(0, 0)
+
+        assertEquals(Player.EMPTY, viewModel.winner)
+    }
 }
