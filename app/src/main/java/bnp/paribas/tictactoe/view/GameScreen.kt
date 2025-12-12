@@ -45,5 +45,50 @@ fun GameScreen(
             modifier = Modifier.padding(16.dp),
             textAlign = TextAlign.Center
         )
+
+        Column {
+            for (row in 0..2) {
+                Row {
+                    for (col in 0..2) {
+                        val buttonText = when (gameState.board[row][col]) {
+                            Player.X -> "X"
+                            Player.O -> "O"
+                            else -> " "
+                        }
+                        Button(
+                            modifier = Modifier.size(60.dp).padding(2.dp).testTag("$col - $row"),
+                            onClick = { viewModel.onBoardClick(row, col) }
+                        ) {
+                            Text(
+                                text = buttonText,
+                                style = MaterialTheme.typography.headlineMedium
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        val statusText: String = when {
+            gameState.winner != Player.EMPTY -> "Player ${gameState.winner} wins!"
+            gameState.moves >= 9 -> "It's a draw!"
+            else -> "Player ${gameState.currentPlayer}'s turn"
+        }
+
+        Text(text = statusText,
+            modifier = Modifier.padding(12.dp),
+            fontSize = 20.sp,
+            textAlign = TextAlign.Center
+        )
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Button(onClick = {
+            viewModel.restart()
+        }) {
+            Text(text = "Restart")
+        }
     }
 }
