@@ -26,14 +26,15 @@ Please use a configuration that is compatible with the one used during developme
 2. **Java Version:** Java 21
 3. **Kotlin Version:** 2.2.x    
 4. **Emulator:** Pixel 4, API 30 (minSDK is 24)
+
 ---  
 
 ### Dependencies
 Additional dependencies can be checked and/or updated in the version catalog: `gradle/libs.versions.toml` file. (Keep them evergreen)
 
+--- 
 
-
-### Steps to Compile and Run
+### Steps to run application
 1. **Clone the repo:**    
    `git clone git@github.com:2025-DEV2-014/TicTacToe.git`
 2. **Import the project:**
@@ -45,7 +46,9 @@ Additional dependencies can be checked and/or updated in the version catalog: `g
     - Dependencies not automatically syncing: press the Gradle sync button
     - Code won't build: Compile all sources manually, Invalidate cache & restart as last resort.
 
-### Running Tests
+--- 
+
+### Running tests
 
 - To run the unit tests, use the gradle task `Unit tests`.
 - Similarly to run the UI tests, use the `TicTacToeScreenTest` task.
