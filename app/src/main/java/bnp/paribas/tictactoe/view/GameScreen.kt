@@ -71,8 +71,14 @@ fun GameScreen(
         }
 
         Spacer(modifier = Modifier.height(32.dp))
-        
-        Text(text = gameState.statusText,
+
+        val statusText = when {
+            gameState.winner != Player.EMPTY -> "Player ${gameState.winner} wins!"
+            gameState.moves >= 9 -> "It's a draw!"
+            else -> "Player ${gameState.currentPlayer}'s turn"
+        }
+
+        Text(text = statusText,
             modifier = Modifier.padding(16.dp),
             fontSize = 20.sp,
             textAlign = TextAlign.Center
