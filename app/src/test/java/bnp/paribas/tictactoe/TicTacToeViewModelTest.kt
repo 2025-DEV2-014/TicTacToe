@@ -33,14 +33,16 @@ class TicTacToeViewModelTest{
 
     @Test
     fun `When the game starts then X plays first`() {
-        assertEquals(Player.X, viewModel.currentPlayer)
+        assertEquals(Player.X, viewModel.gameState.value.currentPlayer)
     }
 
     @Test
     fun `When the game starts then the board should be empty`() {
-        for (i in 0 until viewModel.board.size) {
-            for (j in 0 until viewModel.board[i].size) {
-                assertEquals(viewModel.board[i][j], Player.EMPTY)
+        val state = viewModel.gameState.value
+
+        for (i in 0 until state.board.size) {
+            for (j in 0 until state.board[i].size) {
+                assertEquals(state.board[i][j], Player.EMPTY)
             }
         }
     }
@@ -49,13 +51,13 @@ class TicTacToeViewModelTest{
     fun `Game correctly switches between players`(){
         viewModel.onBoardClick(0,0)
 
-        assertEquals(Player.O, viewModel.currentPlayer)
-        assertEquals(viewModel.board[0][0], Player.X)
+        assertEquals(Player.O, viewModel.gameState.value.currentPlayer)
+        assertEquals(viewModel.gameState.value.board[0][0], Player.X)
 
         viewModel.onBoardClick(0,1)
 
-        assertEquals(Player.X, viewModel.currentPlayer)
-        assertEquals(viewModel.board[0][1], Player.O)
+        assertEquals(Player.X, viewModel.gameState.value.currentPlayer)
+        assertEquals(viewModel.gameState.value.board[0][1], Player.O)
     }
 
     @Test
@@ -63,8 +65,10 @@ class TicTacToeViewModelTest{
         viewModel.onBoardClick(0,0)
         viewModel.onBoardClick(0,0)
 
-        assertEquals(Player.X, viewModel.board[0][0])
-        assertEquals(Player.O, viewModel.currentPlayer)
+        val state = viewModel.gameState.value
+
+        assertEquals(Player.X, state.board[0][0])
+        assertEquals(Player.O, state.currentPlayer)
     }
 
     @Test
@@ -73,14 +77,15 @@ class TicTacToeViewModelTest{
         viewModel.onBoardClick(1,2)
         viewModel.restart()
 
+        val state = viewModel.gameState.value
         // affected ones are empty
-        assertEquals(viewModel.board[1][1], Player.EMPTY)
-        assertEquals(viewModel.board[1][2], Player.EMPTY)
+        assertEquals(state.board[1][1], Player.EMPTY)
+        assertEquals(state.board[1][2], Player.EMPTY)
         // others as well (still)
-        assertEquals(viewModel.board[0][0], Player.EMPTY)
-        assertEquals(viewModel.board[2][2], Player.EMPTY)
+        assertEquals(state.board[0][0], Player.EMPTY)
+        assertEquals(state.board[2][2], Player.EMPTY)
 
-        assertEquals(Player.X, viewModel.currentPlayer)
+        assertEquals(Player.X, state.currentPlayer)
     }
 
     @Test
@@ -103,7 +108,7 @@ class TicTacToeViewModelTest{
         viewModel.onBoardClick(1,0)
         viewModel.onBoardClick(2,0)
 
-        assertEquals(Player.EMPTY, viewModel.winner)
+        assertEquals(Player.EMPTY, viewModel.gameState.value.winner)
     }
 
 
@@ -120,7 +125,7 @@ class TicTacToeViewModelTest{
         viewModel.onBoardClick(1, 1)
         viewModel.onBoardClick(0, 2)
 
-        assertEquals(Player.X, viewModel.winner)
+        assertEquals(Player.X, viewModel.gameState.value.winner)
     }
 
     @Test
@@ -136,7 +141,7 @@ class TicTacToeViewModelTest{
         viewModel.onBoardClick(1, 1)
         viewModel.onBoardClick(2, 0)
 
-        assertEquals(Player.X, viewModel.winner)
+        assertEquals(Player.X, viewModel.gameState.value.winner)
     }
 
     @Test
@@ -153,7 +158,7 @@ class TicTacToeViewModelTest{
         viewModel.onBoardClick(1, 2)
         viewModel.onBoardClick(2, 2)
 
-        assertEquals(Player.O, viewModel.winner)
+        assertEquals(Player.O, viewModel.gameState.value.winner)
     }
 
     @Test
@@ -170,7 +175,7 @@ class TicTacToeViewModelTest{
         viewModel.onBoardClick(1, 2)
         viewModel.onBoardClick(2, 0)
 
-        assertEquals(Player.O, viewModel.winner)
+        assertEquals(Player.O, viewModel.gameState.value.winner)
     }
 
     @Test
@@ -187,17 +192,17 @@ class TicTacToeViewModelTest{
         viewModel.onBoardClick(2, 0)
 
         // there should be "a" winner
-        assertNotEquals(Player.EMPTY, viewModel.winner)
+        assertNotEquals(Player.EMPTY, viewModel.gameState.value.winner)
 
         viewModel.onBoardClick(2, 2)
 
-        assertEquals(viewModel.board[2][2], Player.EMPTY)
+        assertEquals(viewModel.gameState.value.board[2][2], Player.EMPTY)
     }
 
     @Test
     fun `When only one move has been made, there can't be a winner yet`() {
         viewModel.onBoardClick(0, 0)
 
-        assertEquals(Player.EMPTY, viewModel.winner)
+        assertEquals(Player.EMPTY, viewModel.gameState.value.winner)
     }
 }
